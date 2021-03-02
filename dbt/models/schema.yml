@@ -1,0 +1,9 @@
+version: 2
+
+# TODO: define schema
+# TODO: define models
+
+sources:
+  - name: dohmh
+    tables:
+      - name: inspections_raw

@@ -1,0 +1,12 @@
+local:
+  target: postgres
+  outputs:
+    postgres:
+      type: postgres
+      host: localhost
+      port: 5432
+      user: postgres
+      pass: postgres
+      dbname: postgres
+      schema: dohmh
+      threads: 4

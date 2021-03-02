@@ -1,0 +1,13 @@
+__pycache__
+.DS_Store
+.env
+.idea
+.venv
+.vscode
+
+dbt/dbt_modules
+dbt/logs
+dbt/target
+dbt/.user.yml
+
+tmp

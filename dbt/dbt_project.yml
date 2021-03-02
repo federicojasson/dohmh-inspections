@@ -1,0 +1,8 @@
+config-version: 2
+
+name: dohmh
+version: "1.0.0"
+profile: local
+
+models:
+  +materialized: table
