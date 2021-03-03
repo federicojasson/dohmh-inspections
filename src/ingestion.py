@@ -18,13 +18,11 @@ POSTGRES_DATABASE = os.getenv("POSTGRES_DATABASE", "postgres")
 
 
 def main():
-    #with TemporaryFile() as file:
-    # TODO: delete data.csv file
-    with open("./data.csv", "r") as file:
+    with TemporaryFile() as file:
         logger.debug("Temporary file: %s", file.name)
 
-        #extract(file) TODO: uncomment
-        #load(file) TODO: uncommeent
+        extract(file)
+        load(file)
         transform()
 
     logger.info("Done")
