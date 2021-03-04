@@ -36,6 +36,12 @@ The model is built using [dbt](https://www.getdbt.com/), which helps with the or
 
 ![model](model.png)
 
+Besides the dimensions and fact tables shown in this chart, there are more tables to be aware of:
+
+- `dohmh.inspections_raw`: raw data (as it is in the CSV file).
+- `dohmh.inspections_src`: raw data cleaned-up and with less columns (used as source for building the other tables).
+- `dohmh.inspections_rep`: example report (yearly critical violations on american food restaurants, by borough).
+
 
 ## Usage
 

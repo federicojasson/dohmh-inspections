@@ -52,6 +52,14 @@ models:
       - name: score
       - name: grade
 
+  - name: inspections_rep
+    description: Inspection report example (yearly critical violations on american food restaurants, by borough)
+    columns:
+      - name: year
+      - name: cuisine
+      - name: zipcode
+      - name: critical_count
+
   - name: date_dim
     description: Date dimension
     columns:
@@ -88,11 +96,3 @@ models:
       - name: critical
       - name: score
       - name: grade
-
-  - name: inspection_rep
-    description: Inspection report example (yearly critical violations on american food restaurants by borough)
-    columns:
-      - name: year
-      - name: cuisine
-      - name: zipcode
-      - name: critical_count
