@@ -1,6 +1,6 @@
 import os
 import shutil
-from tempfile import TemporaryFile
+from tempfile import NamedTemporaryFile
 
 import psycopg2
 import requests
@@ -18,7 +18,7 @@ POSTGRES_DATABASE = os.getenv("POSTGRES_DATABASE", "postgres")
 
 
 def main():
-    with TemporaryFile() as file:
+    with NamedTemporaryFile() as file:
         logger.debug("Temporary file: %s", file.name)
 
         extract(file)
