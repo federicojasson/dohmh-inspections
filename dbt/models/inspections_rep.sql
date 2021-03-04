@@ -24,3 +24,4 @@ LEFT JOIN {{ ref("restaurant_cuisine_ref") }} AS c ON r.id = c.restaurant_id
 LEFT JOIN {{ ref("zone_dim") }} AS z ON i.zone_id = z.id
 WHERE c.cuisine = 'american'
 GROUP BY d.year, c.cuisine, z.borough
+ORDER BY d.year, c.cuisine, z.borough
