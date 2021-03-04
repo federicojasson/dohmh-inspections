@@ -1,9 +1,98 @@
 version: 2
 
-# TODO: define schema
-# TODO: define models
-
 sources:
   - name: dohmh
     tables:
       - name: inspections_raw
+        description: Inspections (raw data)
+        columns:
+          - name: camis
+          - name: dba
+          - name: boro
+          - name: building
+          - name: street
+          - name: zipcode
+          - name: phone
+          - name: cuisine_description
+          - name: inspection_date
+          - name: action
+          - name: violation_code
+          - name: violation_description
+          - name: critical_flag
+          - name: score
+          - name: grade
+          - name: grade_date
+          - name: record_date
+          - name: inspection_type
+          - name: latitude
+          - name: longitude
+          - name: community_board
+          - name: council_district
+          - name: census_tract
+          - name: bin
+          - name: bbl
+          - name: nta
+
+models:
+  - name: inspections_src
+    description: Inspections (cleaned-up data)
+    columns:
+      - name: restaurant_id
+      - name: restaurant_name
+      - name: restaurant_phone
+      - name: zipcode
+      - name: borough
+      - name: cuisines
+      - name: inspection_date
+      - name: inspection_type
+      - name: violation_code
+      - name: violation_description
+      - name: critical
+      - name: action
+      - name: score
+      - name: grade
+
+  - name: date_dim
+    description: Date dimension
+    columns:
+      - name: id
+      - name: year
+      - name: month
+
+  - name: restaurant_dim
+    description: Restaurant dimension
+    columns:
+      - name: id
+      - name: name
+      - name: phone
+
+  - name: restaurant_cuisine_ref
+    description: Restaurant-Cuisine reference
+    columns:
+      - name: restaurant_id
+      - name: cuisine
+
+  - name: zone_dim
+    description: Zone dimension (ZIP code granularity)
+    columns:
+      - name: id
+      - name: zipcode
+      - name: borough
+
+  - name: inspection_fact
+    description: Inspection fact
+    columns:
+      - name: date_id
+      - name: restaurant_id
+      - name: zone_id
+      - name: critical
+      - name: score
+      - name: grade
+
+  - name: inspection_rep
+    description: Inspection report example (yearly critical violations on american food restaurants by borough)
+    columns:
+      - name: year
+      - name: cuisine
+      - name: zipcode
+      - name: critical_count

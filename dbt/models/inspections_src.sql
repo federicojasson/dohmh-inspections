@@ -1,30 +1,23 @@
--- TODO: transformations and clean up
 SELECT
   camis AS restaurant_id,
   dba AS restaurant_name,
---  boro,
---  building,
---  street,
-  zipcode AS restaurant_zip_code,
+  phone AS restaurant_phone,
 
-  CASE
-    WHEN latitude = '0' AND longitude = '0'
+    CASE
+    WHEN zipcode IN ('0', 'N/A')
     THEN NULL
 
-    ELSE latitude
-  END AS restaurant_latitude,
+    ELSE zipcode
+  END AS zipcode,
 
   CASE
-    WHEN latitude = '0' AND longitude = '0'
+    WHEN boro IN ('0', 'N/A')
     THEN NULL
 
-    ELSE longitude
-  END AS restaurant_longitude,
+    ELSE boro
+  END AS borough,
 
---  phone,
-
-  cuisine_description AS cuisine_original, -- TODO: remove this
-  -- TODO: ugly, but it works
+  -- Normalizes the cuisine description into slash-separated tags
   trim(
     '/' from replace(
       replace(
@@ -33,38 +26,29 @@ SELECT
             replace(
               replace(
                 replace(
-                  lower(
-                    trim(
-                      regexp_replace(cuisine_description, '\([^()]*\)', '')
-                    )
-                  ),
-                  'bottled ',
-                  ''
+                  lower(trim(regexp_replace(cuisine_description, '\([^()]*\)', ''))),
+                  'bottled ', ''
                 ),
-                'café',
-                'coffee'
+                'café', 'coffee'
               ),
-              'etc.',
-              ''
+              'etc.', ''
             ),
-            'including ',
-            ''
+            'including ', ''
           ),
-          'not applicable',
-          ''
+          'not applicable', ''
         ),
-        'not listed',
-        ''
+        'not listed', ''
       ),
-      ', ',
-      '/'
+      ', ', '/'
     )
-  ) AS cuisine, -- TODO: doesn't work perfectly, there are slashes and non-splitting commas
+  ) AS cuisines,
 
-  inspection_date::date AS date,
-  action AS action,
+  inspection_date::date AS inspection_date,
+  inspection_type,
+
   violation_code,
---  violation_description,
+  violation_description,
+
   CASE
     WHEN critical_flag = 'Y'
     THEN TRUE
@@ -75,14 +59,7 @@ SELECT
     ELSE NULL
   END AS critical,
 
+  action,
   score,
   grade
---  inspection_type,
-
---  community_board,
---  council_district,
---  census_tract,
---  bin,
---  bbl,
---  nta
 FROM {{ source("dohmh", "inspections_raw") }}
